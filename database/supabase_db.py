@@ -36,9 +36,13 @@ def listar_pendencias():
 
 
 def inserir_pendencia(dados):
-    
-    for d in dados:
-        d["data_entrada"] = datetime.now().isoformat()
+
+    if isinstance(dados, dict):
+        dados["data_entrada"] = datetime.now().isoformat()
+
+    elif isinstance(dados, list):
+        for d in dados:
+            d["data_entrada"] = datetime.now().isoformat()
 
     supabase.table("pendencias").insert(dados).execute()
 
@@ -110,4 +114,5 @@ def validar_login(usuario, senha):
         return True
     
     return False
+
 
