@@ -3,9 +3,4 @@ pandas
 supabase
 pillow
 openpyxl
-textwarap
-PIL
-io
-datetime
 bcrypt
-re
