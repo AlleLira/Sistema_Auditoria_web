@@ -37,28 +37,7 @@ def listar_pendencias():
 
 
 def inserir_pendencia(dados):
-
-    try:
-
-        dados["data_entrada"] = datetime.now().isoformat()
-
-        # mostrar o que está sendo enviado
-        st.write("Dados enviados:", dados)
-
-        resposta = supabase.table("pendencias").insert(dados).execute()
-
-        # mostrar resposta do banco
-        st.write("Resposta do banco:", resposta)
-
-        return True
-
-    except Exception as e:
-
-        st.error("Erro ao inserir no banco")
-        st.write(e)
-
-        return False
-
+    supabase.table("pendencias").insert(dados).execute()
 
 def excluir_pendencia(id):
 
@@ -127,6 +106,7 @@ def validar_login(usuario, senha):
         return True
     
     return False
+
 
 
 
