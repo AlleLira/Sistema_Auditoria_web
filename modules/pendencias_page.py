@@ -262,16 +262,6 @@ def tela_pendencias():
             inserir_pendencia(dados)
 
             st.session_state["pendencia_salva"] = True
-            st.session_state["cadastro_data"] = None
-            st.session_state["select_bloco"] = list(BLOCOS.keys())[0]
-            st.session_state["select_loja"] = ""
-            st.session_state["select_produto"] = ""
-            st.session_state["select_erro"] = ""
-            st.session_state["select_tipo"] = ""
-            st.session_state["input_valor"] = 0.0
-            st.session_state["input_controle_dav"] = ""
-            st.session_state["input_consultor"] = ""
-            st.session_state["input_observacao"] = ""
             st.rerun()
             
 
@@ -305,6 +295,7 @@ def tela_pendencias():
         else:
 
             st.warning("Nenhuma pendência encontrada no período selecionado.")
+
 
 
 
