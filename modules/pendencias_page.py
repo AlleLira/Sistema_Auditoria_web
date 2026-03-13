@@ -68,7 +68,7 @@ def tela_pendencias():
 
         filtro_status = st.selectbox(
             "Status",
-            ["Todos", "pendente", "finalizado"]
+            ["pendente", "finalizado","Todos"]
         )
 
     with col5:
@@ -292,4 +292,5 @@ def tela_pendencias():
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
         else:
+
             st.warning("Nenhuma pendência encontrada no período selecionado.")
