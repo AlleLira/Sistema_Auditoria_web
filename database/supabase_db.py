@@ -37,14 +37,24 @@ def listar_pendencias():
 
 def inserir_pendencia(dados):
 
-    if isinstance(dados, dict):
-        dados["data_entrada"] = datetime.now().isoformat()
+    try:
 
-    elif isinstance(dados, list):
-        for d in dados:
-            d["data_entrada"] = datetime.now().isoformat()
+        # se vier apenas 1 registro
+        if isinstance(dados, dict):
+            dados["data_entrada"] = datetime.now().isoformat()
 
-    supabase.table("pendencias").insert(dados).execute()
+        # se vier lista de registros
+        elif isinstance(dados, list):
+            for d in dados:
+                d["data_entrada"] = datetime.now().isoformat()
+
+        resposta = supabase.table("pendencias").insert(dados).execute()
+
+        st.write("Resposta do banco:", resposta)
+
+    except Exception as e:
+        st.error("Erro ao inserir no banco:")
+        st.write(e)
 
 
 def excluir_pendencia(id):
@@ -114,5 +124,6 @@ def validar_login(usuario, senha):
         return True
     
     return False
+
 
 
