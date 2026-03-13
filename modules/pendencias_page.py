@@ -262,7 +262,6 @@ def tela_pendencias():
             inserir_pendencia(dados)
 
             st.session_state["pendencia_salva"] = True
-            st.rerun()
             
 
     # =========================
@@ -295,5 +294,6 @@ def tela_pendencias():
         else:
 
             st.warning("Nenhuma pendência encontrada no período selecionado.")
+
 
 
