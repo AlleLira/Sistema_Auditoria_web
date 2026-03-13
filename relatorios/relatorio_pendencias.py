@@ -43,7 +43,10 @@ def gerar_relatorio_imagem(df_f, filtro_consultor=None, filtro_loja=None,
         consultores = [filtro_consultor]
 
     # Colunas do relatório (usar nomes do DataFrame)
-    colunas = ["Data", "Controle DAV", "Produto", "Erro", "Tipo", "Valor", "observacao"]
+    if filtro_consultor and filtro_consultor != "Todos":
+        colunas = ["Data", "Controle DAV", "Produto", "Erro", "Tipo", "observacao"]
+    else:
+        colunas = ["Data", "Controle DAV", "Produto", "Erro", "Tipo", "Valor", "observacao"]
 
     # Definir larguras mínimas por coluna para não sobrepor texto
     largura_minima = {
@@ -52,9 +55,11 @@ def gerar_relatorio_imagem(df_f, filtro_consultor=None, filtro_loja=None,
         "Produto": 120,
         "Erro": 100,
         "Tipo": 80,
-        "Valor": 80,
         "observacao": 200
     }
+    
+    if "Valor" in colunas:
+        largura_minima["Valor"] = 80
 
     # Calcular larguras reais
     img_tmp = Image.new("RGB", (1,1))
@@ -131,10 +136,11 @@ def gerar_relatorio_imagem(df_f, filtro_consultor=None, filtro_loja=None,
             draw.text((x, y), str(row['tipo']), font=font, fill="black"); x += col_widths["Tipo"]
 
             # Valor alinhado à direita
-            valor_text = f"R$ {row['valor']:.2f}"
-            tw = medir_texto(draw, valor_text, font)
-            draw.text((x + col_widths["Valor"] - tw - 3, y), valor_text, font=font, fill="black")
-            x += col_widths["Valor"]
+            if "Valor" in colunas:
+                valor_text = f"R$ {row['valor']:.2f}"
+                tw = medir_texto(draw, valor_text, font)
+                draw.text((x + col_widths["Valor"] - tw - 3, y), valor_text, font=font, fill="black")
+                x += col_widths["Valor"]
 
             # Observação com quebra de linha
             obs_text = str(row['observacao'])
@@ -145,7 +151,8 @@ def gerar_relatorio_imagem(df_f, filtro_consultor=None, filtro_loja=None,
             y += 10  # espaçamento entre linhas
 
     # Total da loja
-    draw.text((10, y), f"Total da Loja: R$ {total_loja:.2f}", font=font_bold, fill="black")
+    if filtro_consultor == "Todos" or not filtro_consultor:
+        draw.text((10, y), f"Total da Loja: R$ {total_loja:.2f}", font=font_bold, fill="black")
 
     return img
 
@@ -213,6 +220,7 @@ def gerar_relatorio_excel(df, filtro_data_inicial=None, filtro_data_final=None):
     wb.save(buffer)
     buffer.seek(0)
     return buffer
+
 
 
 
