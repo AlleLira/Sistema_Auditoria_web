@@ -1,6 +1,7 @@
 from config.supabase_client import supabase
 import bcrypt
 from datetime import datetime
+import streamlit as st
 
 
 # ======================
@@ -124,6 +125,7 @@ def validar_login(usuario, senha):
         return True
     
     return False
+
 
 
 
