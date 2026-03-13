@@ -42,13 +42,19 @@ def inserir_pendencia(dados):
 
         dados["data_entrada"] = datetime.now().isoformat()
 
-        supabase.table("pendencias").insert(dados).execute()
+        # mostrar o que está sendo enviado
+        st.write("Dados enviados:", dados)
+
+        resposta = supabase.table("pendencias").insert(dados).execute()
+
+        # mostrar resposta do banco
+        st.write("Resposta do banco:", resposta)
 
         return True
 
     except Exception as e:
 
-        st.error("Erro ao inserir no banco:")
+        st.error("Erro ao inserir no banco")
         st.write(e)
 
         return False
@@ -121,6 +127,7 @@ def validar_login(usuario, senha):
         return True
     
     return False
+
 
 
 
